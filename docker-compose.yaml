@@ -1,0 +1,60 @@
+services: 
+  cassandra-1: 
+    image: cassandra:5.0
+    container_name: cassandra-1 
+    hostname: cassandra-1 
+    networks: 
+      - cassandra-cluster-net
+    ports: 
+      - "9042:9042" 
+    environment: &environment  
+        CASSANDRA_SEEDS: "cassandra-1,cassandra-2"   
+        CASSANDRA_CLUSTER_NAME: MyTestCluster 
+        CASSANDRA_DC: DC1 
+        CASSANDRA_RACK: RACK1 
+        CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch 
+        CASSANDRA_NUM_TOKENS: 128 
+    volumes:
+      - "cassandra-1-data:/var/lib/cassandra"
+ 
+  cassandra-2: 
+    image: cassandra:5.0
+    container_name: cassandra-2 
+    hostname: cassandra-2 
+    networks: 
+      - cassandra-cluster-net
+    ports: 
+      - "9043:9042" 
+    environment: *environment   
+    volumes:
+      - "cassandra-2-data:/var/lib/cassandra"
+    depends_on: 
+      cassandra-1:  
+        condition: service_started 
+
+  cassandra-3: 
+    image: cassandra:5.0
+    container_name: cassandra-3 
+    hostname: cassandra-3 
+    networks: 
+      - cassandra-cluster-net
+    ports: 
+      - "9044:9042" 
+    environment: *environment   
+    volumes:
+      - "cassandra-3-data:/var/lib/cassandra"
+    depends_on: 
+      cassandra-2:   
+        condition: service_started
+
+networks: 
+  cassandra-cluster-net: 
+    driver: bridge
+
+volumes:
+  cassandra-1-data:
+    driver: local
+  cassandra-2-data:
+    driver: local
+  cassandra-3-data:
+    driver: local
