@@ -19,20 +19,23 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner() {
+    public CqlSession cqlSession() {
+        return CqlSession.builder()
+                .addContactPoints(List.of(
+                        new InetSocketAddress("localhost", 9042),
+                        new InetSocketAddress("localhost", 9043),
+                        new InetSocketAddress("localhost", 9044)
+                ))
+                .withLocalDatacenter("DC1")
+                .build();
+    }
+
+    @Bean
+    public CommandLineRunner commandLineRunner(CqlSession session) {
         return _ -> {
-            try (CqlSession session = CqlSession.builder()
-                    .addContactPoints(List.of(
-                            new InetSocketAddress("localhost", 9042),
-                            new InetSocketAddress("localhost", 9043),
-                            new InetSocketAddress("localhost", 9044)
-                    ))
-                    .withLocalDatacenter("DC1")
-                    .build()) {
-                ResultSet rs = session.execute("select release_version from system.local");
-                Row row = rs.one();
-                System.out.println(row.getString("release_version"));
-            }
+            ResultSet rs = session.execute("select release_version from system.local");
+            Row row = rs.one();
+            System.out.println(row.getString("release_version"));
         };
     }
 
