@@ -8,10 +8,10 @@
 		<version>3.3.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>mat-sik</groupId>
-	<artifactId>cassandra.chat</artifactId>
+	<groupId>matsik</groupId>
+	<artifactId>cassandra-chat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cassandra.chat</name>
+	<name>cassandra-chat</name>
 	<description>cassandra chat app</description>
 	<properties>
 		<java.version>22</java.version>

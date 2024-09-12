@@ -1,4 +1,4 @@
-package mat_sik.cassandra.chat;
+package matsik.cassandrachat;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.cql.ResultSet;

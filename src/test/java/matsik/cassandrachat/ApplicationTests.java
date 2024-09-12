@@ -1,4 +1,4 @@
-package mat_sik.cassandra.chat;
+package matsik.cassandrachat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
