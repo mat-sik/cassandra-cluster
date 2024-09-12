@@ -8,10 +8,9 @@ USE chat;
 
 // Get generic user data.
 CREATE TABLE IF NOT EXISTS users (
-    id timeuuid,
+    id timeuuid PRIMARY KEY,
     name text,
     surname text,
-    PRIMARY KEY ((name, surname), id)
 );
 
 // Authenticate user by email
@@ -29,7 +28,7 @@ CREATE TABLE IF NOT EXISTS users_by_username (
     username text,
     password text,
     role text,
-    PRIMARY KEY ((email), id)
+    PRIMARY KEY ((username), id)
 );
 
 // Create topic or add user to topic or remove user from topic or check if 
