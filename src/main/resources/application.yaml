@@ -1,3 +1,11 @@
 spring:
   application:
-    name: cassandra.chat
+    name: cassandrachat
+
+cassandra:
+  localDatacenter: "DC1"
+  contactPoints:
+    - "localhost:9042"
+    - "localhost:9043"
+    - "localhost:9044"
+  keyspace: "chat"
