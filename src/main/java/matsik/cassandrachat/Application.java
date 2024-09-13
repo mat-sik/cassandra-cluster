@@ -18,9 +18,7 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(
-            UserRepository userRepository
-    ) {
+    public CommandLineRunner commandLineRunner(UserRepository userRepository) {
         return _ -> {
             var newUser = new User(
                     "username_1",
