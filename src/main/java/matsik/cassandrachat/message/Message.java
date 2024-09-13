@@ -1,4 +1,4 @@
-package matsik.cassandrachat.topic;
+package matsik.cassandrachat.message;
 
 import com.datastax.oss.driver.api.mapper.annotations.ClusteringColumn;
 import com.datastax.oss.driver.api.mapper.annotations.CqlName;
@@ -7,18 +7,23 @@ import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
 import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
 import lombok.Value;
 
-import java.util.Set;
+import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @PropertyStrategy(mutable = false)
-@CqlName("topics_by_user_id")
+@CqlName("messages_by_topic_id_year_month")
 @Value
-public class Topic {
+public class Message {
     @PartitionKey
-    UUID user_id;
-    @ClusteringColumn(1)
+    UUID topic_id;
+    @PartitionKey(1)
+    int added_year;
+    @PartitionKey(2)
+    int added_month;
+    @ClusteringColumn(3)
     UUID id;
-    Set<UUID> user_ids;
-    String name;
+    @ClusteringColumn(4)
+    Instant added_time;
+    String content;
 }

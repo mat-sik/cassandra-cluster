@@ -1,6 +1,7 @@
 package matsik.cassandrachat.mapper;
 
 import com.datastax.oss.driver.api.core.CqlSession;
+import matsik.cassandrachat.message.MessageRepository;
 import matsik.cassandrachat.topic.TopicRepository;
 import matsik.cassandrachat.user.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +23,10 @@ public class ChatMapperConfiguration {
     @Bean
     public TopicRepository topicRepository(ChatMapper mapper) {
         return mapper.topicRepository();
+    }
+
+    @Bean
+    public MessageRepository messageRepository(ChatMapper mapper) {
+        return mapper.messageRepository();
     }
 }
