@@ -15,14 +15,26 @@ public interface MessageRepository {
     @Insert
     void save(Message message);
 
+
+    @Select(customWhereClause = "topic_id = :topicId AND added_year = :addedYear AND added_month = :addedMonth", limit = ":l")
+    PagingIterable<Message> findTopByPrimaryKey(
+            UUID topicId,
+            int addedYear,
+            int addedMonth,
+            @CqlName("l") int limit
+    );
+
     @Select(customWhereClause = "topic_id = :topicId AND added_year = :addedYear AND added_month = :addedMonth AND id < :id", limit = ":l")
-    PagingIterable<Message> findByPrimaryKey(
+    PagingIterable<Message> findNextByPrimaryKey(
             UUID topicId,
             int addedYear,
             int addedMonth,
             UUID id,
             @CqlName("l") int limit
     );
+
+    @Select
+    Message findByPrimaryKey(UUID topicId, int addedYear, int addedMonth, UUID id);
 
     @Delete(entityClass = Message.class)
     void deleteByPrimaryKey(UUID topic_id, int added_year, int added_month, UUID id);

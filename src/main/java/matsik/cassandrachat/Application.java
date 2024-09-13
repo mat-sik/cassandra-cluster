@@ -33,15 +33,25 @@ public class Application {
             MessageRepository messageRepository) {
         return _ -> {
 //            insertData(userRepository, topicRepository, messageRepository);
-             PagingIterable<Message> iterable = messageRepository.findByPrimaryKey(
-                    UUID.fromString("9f5edfb0-71e1-11ef-bcc9-ed61c2074bc3"),
-                    2024,
-                    9,
-                    UUID.fromString("a1410d30-71e1-11ef-bcc9-ed61c2074bc3"),
+            UUID topicId = UUID.fromString("9f5edfb0-71e1-11ef-bcc9-ed61c2074bc3");
+            UUID messageId = UUID.fromString("a1410d30-71e1-11ef-bcc9-ed61c2074bc3");
+            int addedYear = 2024;
+            int addedMonth = 9;
+            PagingIterable<Message> iterable = messageRepository.findNextByPrimaryKey(
+                    topicId,
+                    addedYear,
+                    addedMonth,
+                    messageId,
                     10
             );
-             List<Message> messages = iterable.all();
-             messages.forEach(System.out::println);
+            System.out.println("NEXT:");
+            List<Message> messages = iterable.all();
+            messages.forEach(System.out::println);
+            System.out.println("TOP:");
+            iterable = messageRepository.findTopByPrimaryKey(topicId, addedYear, addedMonth, 10);
+            iterable.all().forEach(System.out::println);
+            System.out.println("EXACT:");
+            System.out.println(messageRepository.findByPrimaryKey(topicId, addedYear, addedMonth, messageId));
         };
     }
 
