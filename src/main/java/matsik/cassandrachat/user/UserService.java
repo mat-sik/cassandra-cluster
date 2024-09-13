@@ -29,6 +29,8 @@ public class UserService {
         var user = new User(request.username(), request.email(), request.name(), request.surname());
         boolean inserted = userRepository.saveIfNotExists(user);
         if (!inserted) {
+            // fetch that row
+            // insert in batch appropriate inserts to other sister tables
             throw new RuntimeException("The unique constraints of user has been violated");
         }
 
