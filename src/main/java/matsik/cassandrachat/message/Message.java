@@ -23,7 +23,6 @@ public class Message {
     int added_month;
     @ClusteringColumn(3)
     UUID id;
-    @ClusteringColumn(4)
     Instant added_time;
     String content;
 }

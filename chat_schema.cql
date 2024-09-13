@@ -34,5 +34,5 @@ CREATE TABLE IF NOT EXISTS messages_by_topic_id_year_month (
     id timeuuid,
     added_time timestamp,
     content text,
-    PRIMARY KEY ((topic_id, added_year, added_month), id, added_time)
-) WITH CLUSTERING ORDER BY (id DESC, added_time DESC);
+    PRIMARY KEY ((topic_id, added_year, added_month), id)
+) WITH CLUSTERING ORDER BY (id DESC);

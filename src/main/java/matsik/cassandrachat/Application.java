@@ -1,5 +1,6 @@
 package matsik.cassandrachat;
 
+import com.datastax.oss.driver.api.core.PagingIterable;
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import matsik.cassandrachat.message.Message;
 import matsik.cassandrachat.message.MessageRepository;
@@ -14,6 +15,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.annotation.Bean;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -30,40 +32,57 @@ public class Application {
             TopicRepository topicRepository,
             MessageRepository messageRepository) {
         return _ -> {
-            UUID userId = Uuids.timeBased();
-            var user = new User(
-                    "username_1",
-                    userId,
-                    "password_1",
-                    "admin",
-                    "name_1",
-                    "surname_1"
+//            insertData(userRepository, topicRepository, messageRepository);
+             PagingIterable<Message> iterable = messageRepository.findByPrimaryKey(
+                    UUID.fromString("9f5edfb0-71e1-11ef-bcc9-ed61c2074bc3"),
+                    2024,
+                    9,
+                    UUID.fromString("a1410d30-71e1-11ef-bcc9-ed61c2074bc3"),
+                    10
             );
-            userRepository.saveIfNotExists(user);
-
-            UUID topicId = Uuids.timeBased();
-            var topic = new Topic(
-                    userId,
-                    topicId,
-                    null,
-                    "new_topic_1"
-            );
-            topicRepository.save(topic);
-
-            int currentYear = 2024;
-            int currentMonth = 9;
-            for (int i = 0; i < 100; i++) {
-                var message = new Message(
-                        topicId,
-                        currentYear,
-                        currentMonth,
-                        Uuids.timeBased(),
-                        Instant.now(),
-                        "message_" + i
-                );
-                messageRepository.save(message);
-            }
+             List<Message> messages = iterable.all();
+             messages.forEach(System.out::println);
         };
+    }
+
+    private void insertData(
+            UserRepository userRepository,
+            TopicRepository topicRepository,
+            MessageRepository messageRepository
+    ) {
+        UUID userId = Uuids.timeBased();
+        var user = new User(
+                "username_1",
+                userId,
+                "password_1",
+                "admin",
+                "name_1",
+                "surname_1"
+        );
+        userRepository.saveIfNotExists(user);
+
+        UUID topicId = Uuids.timeBased();
+        var topic = new Topic(
+                userId,
+                topicId,
+                null,
+                "new_topic_1"
+        );
+        topicRepository.save(topic);
+
+        int currentYear = 2024;
+        int currentMonth = 9;
+        for (int i = 0; i < 100; i++) {
+            var message = new Message(
+                    topicId,
+                    currentYear,
+                    currentMonth,
+                    Uuids.timeBased(),
+                    Instant.now(),
+                    "message_" + i
+            );
+            messageRepository.save(message);
+        }
     }
 
 }
