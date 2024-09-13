@@ -15,6 +15,8 @@ public class User {
     String username;
     @PartitionKey(1)
     String email;
+    String password;
+    String role;
     String name;
     String surname;
 }

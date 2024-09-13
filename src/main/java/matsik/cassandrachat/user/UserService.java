@@ -26,7 +26,7 @@ public class UserService {
 
     // This is incorrect in case the application running this dies, before batch is executed.
     public void save(SaveUserRequest request) {
-        var user = new User(request.username(), request.email(), request.name(), request.surname());
+        var user = new User(request.username(), request.email(), request.password(), request.role(), request.name(), request.surname());
         boolean inserted = userRepository.saveIfNotExists(user);
         if (!inserted) {
             // fetch that row

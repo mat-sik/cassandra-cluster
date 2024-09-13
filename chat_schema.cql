@@ -10,6 +10,8 @@ USE chat;
 CREATE TABLE IF NOT EXISTS users (
     username text,
     email text,
+    password text,
+    role text,
     name text,
     surname text,
     PRIMARY KEY ((username, email))
