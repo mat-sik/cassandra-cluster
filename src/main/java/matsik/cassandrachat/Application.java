@@ -1,7 +1,7 @@
 package matsik.cassandrachat;
 
 import matsik.cassandrachat.user.UserService;
-import matsik.cassandrachat.user.dtos.SaveUserRequest;
+import matsik.cassandrachat.user.model.User;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,7 +21,7 @@ public class Application {
             UserService userService
     ) {
         return _ -> {
-            var saveUserRequest = new SaveUserRequest(
+            var newUser = new User(
                     "username_1",
                     "email_1@mail.com",
                     "name_1",
@@ -29,7 +29,7 @@ public class Application {
                     "password_1",
                     "admin"
             );
-            userService.save(saveUserRequest);
+            userService.save(newUser);
         };
     }
 
