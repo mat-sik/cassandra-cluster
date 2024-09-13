@@ -1,6 +1,5 @@
 package matsik.cassandrachat.user.repository;
 
-import com.datastax.oss.driver.api.core.cql.BoundStatement;
 import com.datastax.oss.driver.api.mapper.annotations.Dao;
 import com.datastax.oss.driver.api.mapper.annotations.Delete;
 import com.datastax.oss.driver.api.mapper.annotations.Insert;
@@ -13,9 +12,9 @@ public interface UserRepository {
     @Select
     User findByPrimaryKey(String username, String email);
 
-    @Insert
-    BoundStatement save(User user);
+    @Insert(ifNotExists = true)
+    boolean save(User user);
 
     @Delete(entityClass = User.class)
-    BoundStatement deleteByPrimaryKey(String username, String email);
+    void deleteByPrimaryKey(String username, String email);
 }
