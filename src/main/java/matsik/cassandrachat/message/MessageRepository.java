@@ -15,7 +15,6 @@ public interface MessageRepository {
     @Insert
     void save(Message message);
 
-
     @Select(customWhereClause = "topic_id = :topicId AND added_year = :addedYear AND added_month = :addedMonth", limit = ":l")
     PagingIterable<Message> findTopByPrimaryKey(
             UUID topicId,
