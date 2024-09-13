@@ -12,6 +12,6 @@ public interface MessageRepository {
     @Insert
     void save(Message message);
 
-    @Delete
+    @Delete(entityClass = Message.class)
     void deleteByPrimaryKey(UUID topic_id, int added_year, int added_month, UUID id);
 }
