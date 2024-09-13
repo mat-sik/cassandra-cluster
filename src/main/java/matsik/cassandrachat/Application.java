@@ -1,7 +1,8 @@
 package matsik.cassandrachat;
 
-import matsik.cassandrachat.user.UserService;
-import matsik.cassandrachat.user.model.User;
+import com.datastax.oss.driver.api.core.uuid.Uuids;
+import matsik.cassandrachat.user.User;
+import matsik.cassandrachat.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,18 +19,19 @@ public class Application {
 
     @Bean
     public CommandLineRunner commandLineRunner(
-            UserService userService
+            UserRepository userRepository
     ) {
         return _ -> {
             var newUser = new User(
                     "username_1",
-                    "email_1@mail.com",
+                    Uuids.timeBased(),
                     "name_1",
                     "surename_1",
                     "password_1",
                     "admin"
             );
-            userService.save(newUser);
+            var inserted = userRepository.saveIfNotExists(newUser);
+            System.out.println(inserted);
         };
     }
 
