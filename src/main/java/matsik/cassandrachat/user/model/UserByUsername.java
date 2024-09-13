@@ -5,17 +5,19 @@ import com.datastax.oss.driver.api.mapper.annotations.CqlName;
 import com.datastax.oss.driver.api.mapper.annotations.Entity;
 import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
 import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
-import com.datastax.oss.driver.api.mapper.entity.naming.GetterStyle;
+import lombok.Value;
 
 import java.util.UUID;
 
 @Entity
-@PropertyStrategy(mutable = false, getterStyle = GetterStyle.FLUENT)
+@PropertyStrategy(mutable = false)
 @CqlName("users_by_username")
-public record UserByUsername(
-        @PartitionKey String username,
-        @ClusteringColumn(1) UUID id,
-        String password,
-        String role
-) {
+@Value
+public class UserByUsername {
+    @PartitionKey
+    String username;
+    @ClusteringColumn(1)
+    UUID id;
+    String password;
+    String role;
 }
