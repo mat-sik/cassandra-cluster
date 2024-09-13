@@ -14,7 +14,7 @@ public interface UserRepository {
     User findByPrimaryKey(String username, String email);
 
     @Insert(ifNotExists = true)
-    boolean save(User user);
+    boolean saveIfNotExists(User user);
 
     @Delete(entityClass = User.class)
     BoundStatement deleteByPrimaryKey(String username, String email);
