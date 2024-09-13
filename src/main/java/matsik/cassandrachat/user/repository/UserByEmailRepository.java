@@ -1,22 +1,21 @@
-package matsik.cassandrachat.user;
+package matsik.cassandrachat.user.repository;
 
 import com.datastax.oss.driver.api.core.cql.BoundStatement;
 import com.datastax.oss.driver.api.mapper.annotations.Dao;
 import com.datastax.oss.driver.api.mapper.annotations.Delete;
 import com.datastax.oss.driver.api.mapper.annotations.Insert;
 import com.datastax.oss.driver.api.mapper.annotations.Select;
-
-import java.util.UUID;
+import matsik.cassandrachat.user.model.UserByEmail;
 
 @Dao
-public interface UserRepository {
+public interface UserByEmailRepository {
 
     @Select
-    User findById(UUID id);
+    UserByEmail findByEmail(String email);
 
     @Insert
-    BoundStatement save(User user);
+    BoundStatement save(UserByEmail user);
 
-    @Delete(entityClass = User.class)
-    BoundStatement deleteById(UUID id);
+    @Delete(entityClass = UserByEmail.class)
+    BoundStatement deleteByEmail(String email);
 }
