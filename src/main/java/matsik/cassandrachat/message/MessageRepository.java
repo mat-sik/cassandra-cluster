@@ -1,6 +1,7 @@
 package matsik.cassandrachat.message;
 
 import com.datastax.oss.driver.api.core.PagingIterable;
+import com.datastax.oss.driver.api.mapper.annotations.CqlName;
 import com.datastax.oss.driver.api.mapper.annotations.Dao;
 import com.datastax.oss.driver.api.mapper.annotations.Delete;
 import com.datastax.oss.driver.api.mapper.annotations.Insert;
@@ -20,7 +21,7 @@ public interface MessageRepository {
             int addedYear,
             int addedMonth,
             UUID id,
-            int l
+            @CqlName("l") int limit
     );
 
     @Delete(entityClass = Message.class)
