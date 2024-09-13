@@ -6,15 +6,15 @@ import com.datastax.oss.driver.api.mapper.annotations.PartitionKey;
 import com.datastax.oss.driver.api.mapper.annotations.PropertyStrategy;
 import lombok.Value;
 
-import java.util.UUID;
-
 @Entity
 @PropertyStrategy(mutable = false)
 @CqlName("users")
 @Value
 public class User {
     @PartitionKey
-    UUID id;
+    String username;
+    @PartitionKey(1)
+    String email;
     String name;
     String surname;
 }

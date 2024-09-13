@@ -7,17 +7,15 @@ import com.datastax.oss.driver.api.mapper.annotations.Insert;
 import com.datastax.oss.driver.api.mapper.annotations.Select;
 import matsik.cassandrachat.user.model.User;
 
-import java.util.UUID;
-
 @Dao
 public interface UserRepository {
 
     @Select
-    User findById(UUID id);
+    User findByPrimaryKey(String username, String email);
 
     @Insert
     BoundStatement save(User user);
 
     @Delete(entityClass = User.class)
-    BoundStatement deleteById(UUID id);
+    BoundStatement deleteByPrimaryKey(String username, String email);
 }

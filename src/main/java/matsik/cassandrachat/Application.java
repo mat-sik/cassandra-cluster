@@ -1,8 +1,7 @@
 package matsik.cassandrachat;
 
 import com.datastax.oss.driver.api.core.CqlSession;
-import com.datastax.oss.driver.api.core.cql.ResultSet;
-import com.datastax.oss.driver.api.core.cql.Row;
+import matsik.cassandrachat.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,11 +17,12 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(CqlSession session) {
+    public CommandLineRunner commandLineRunner(
+            CqlSession session,
+            UserRepository repository
+    ) {
         return _ -> {
-            ResultSet rs = session.execute("select release_version from system.local");
-            Row row = rs.one();
-            System.out.println(row.getString("release_version"));
+
         };
     }
 
